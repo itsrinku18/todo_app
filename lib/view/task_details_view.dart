@@ -24,6 +24,7 @@ class TaskDetailsView extends StatelessWidget {
       dueDate.value = task!.dueDate;
     }
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(task != null ? 'Edit Task' : 'Add Task'),
       ),
@@ -34,13 +35,27 @@ class TaskDetailsView extends StatelessWidget {
             TextField(
               controller: titleController,
               decoration: InputDecoration(labelText: 'Title'),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
             TextField(
               controller: descriptionController,
               decoration: InputDecoration(labelText: 'Description'),
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w800,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 16,
             ),
             Obx(() => DropdownButton<int>(
-              value: priority.value,
+                  dropdownColor: Colors.white,
+                  value: priority.value,
                   items: [
                     DropdownMenuItem(
                       child: Text('Low'),
@@ -59,8 +74,27 @@ class TaskDetailsView extends StatelessWidget {
                     priority.value = value!;
                   },
                 )),
-            Obx(() => Text('Due Date: ${dueDate.value}')),
+            SizedBox(
+              height: 20,
+            ),
+            Obx(
+              () => Text(
+                'Due Date: ${dueDate.value}',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.black,
+              ),
               onPressed: () async {
                 final selectDate = await showDatePicker(
                   context: context,
@@ -75,21 +109,35 @@ class TaskDetailsView extends StatelessWidget {
               child: Text('Pick Due Date'),
             ),
             Spacer(),
-            ElevatedButton(
-              onPressed: () {
-                final newTask = Task(
-                    title: titleController.text,
-                    description: descriptionController.text,
-                    priority: priority.value,
-                    dueDate: dueDate.value);
-                if (task != null) {
-                  taskController.editTask(index!, newTask);
-                } else {
-                  taskController.addTask(newTask);
-                }
-                Get.back();
-              },
-              child: Text('Save Task'),
+            SizedBox(
+              height: 50.0,
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.black,
+                ),
+                onPressed: () async {
+                  final newTask = Task(
+                      title: titleController.text,
+                      description: descriptionController.text,
+                      priority: priority.value,
+                      dueDate: dueDate.value);
+                  if (task != null) {
+                    taskController.editTask(index!, newTask);
+                  } else {
+                    taskController.addTask(newTask);
+                  }
+
+                  Get.back();
+                },
+                child: Text(
+                  'Save Task',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
