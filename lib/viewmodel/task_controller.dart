@@ -28,7 +28,7 @@ class TaskController extends GetxController {
 
   void deleteTask(int index){
     taskBox.deleteAt(index);
-    tasks.remove(index);
+    tasks.removeAt(index);
   }
 
   void sortTaskByPriority(){
